@@ -65,6 +65,11 @@ Would you like to use TurboPack as the development server? > No
 Would you like to customize the default import alias? > Yes   (USE DEFAULT, JUST PRESS "ENTER")
 ```
 
+As the following figure shows:
+
+![image](https://github.com/user-attachments/assets/fcd32271-f1c9-46f6-9428-4be9c50842ea)
+
+
 ### 2. Install Core Packages
 Run the following commands to add the necessary dependacies:
 ```bash
