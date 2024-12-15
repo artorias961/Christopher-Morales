@@ -9,14 +9,15 @@ PUT INFO LATER
 
 
 
-### Node JS Installation V20.18.1 LTS
+### Node JS Installation v18.20.5 LTS
 Just navigate to the [NodeJS link](https://nodejs.org/en/download/package-manager) and select **V20.18.1 (LTS)**):
 
-![image](https://github.com/user-attachments/assets/d7440436-8b7a-4bb6-bee3-b6ca65de9a33)
+![image](https://github.com/user-attachments/assets/8eb49321-db80-4ae0-9cf7-2115877f69bf)
 
 
 
-### Installing npm v10.8.2 (need V20.18.1 LTS node)
+
+### Installing npm v10.8.2 (need v18.20.5 LTS node)
 Open powershell and type in the following:
 ```powershell
 # installs fnm (Fast Node Manager)
@@ -26,10 +27,10 @@ winget install Schniz.fnm
 fnm env --use-on-cd | Out-String | Invoke-Expression
 
 # download and install Node.js
-fnm use --install-if-missing 20
+fnm use --install-if-missing 18
 
 # verifies the right Node.js version is in the environment
-node -v # should print `v20.18.1`
+node -v # should print `v18.20.5`
 
 # verifies the right npm version is in the environment
 npm -v # should print `10.8.2`
@@ -93,6 +94,7 @@ npm install axios ws
 
 # Other utilities
 npm install clsx class-variance-authority
+
 ```
 
 
