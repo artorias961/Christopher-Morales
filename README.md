@@ -100,5 +100,20 @@ npm install clsx class-variance-authority
 
 ```
 
+#### Any errors? Check versions
+If you get any errors then its a version stability issue. Just keep in mind it depends what **Node**, **NPM**, and **React** versio you are using cause it will cause a lot of issues!!! Try one of the following:
 
+Verify react version:
+```bash
+npm ls react
+```
 
+Verify node (Node.JS) version:
+```bash
+node -v
+```
+
+Verify npm version:
+```bash
+npm -v
+```
