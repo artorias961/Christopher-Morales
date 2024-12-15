@@ -74,6 +74,9 @@ As the following figure shows:
 ### 2. Install Core Packages
 Run the following commands to add the necessary dependacies:
 ```bash
+# Install React and React DOM
+npm install react@18.2.0 react-dom@18.2.0
+
 # For UI (Tailwind CSS, Shadcn, Radix, Sonner)
 npm install tailwindcss@latest postcss@latest autoprefixer@latest @shadcn/ui radix-ui sonner
 
