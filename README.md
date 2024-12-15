@@ -1,9 +1,23 @@
 # Final Portfolio
 
+Put vision here later
+
+
+
 ## Installation Requirements
 
-### Installing Node v20 LTS
 
+
+
+### Node JS Installation V22.12.0
+Just navigate to the [NodeJS link](https://nodejs.org/en):
+
+![image](https://github.com/user-attachments/assets/046eaec8-9c38-4236-904d-64d50bb51e59)
+
+
+
+### Installing npm v10.9.0 (need V22.12.0 node)
+Open powershell and type in the following:
 ```powershell
 # installs fnm (Fast Node Manager)
 winget install Schniz.fnm
@@ -22,5 +36,59 @@ npm -v # should print `10.9.0`
 ```
 
 
-### Next.js 
+
+
+
+
+
+
+
+
+## Creating NextJS template
+
+### 1. Creating the website using Next.JS
+Create a new project:
+```bash
+# Create a Next.js app with TypeScript
+npx create-next-app@latest your-project-name --typescript
+cd your-project-name
+```
+
+A prompt will then show up on the terminal:
+```bash
+Would you like to use ESLint? › Yes
+Would you like to use Tailwind CSS? › Yes
+Would you like to use `src/` directory? › Yes
+Would you like to use the experimental `app/` directory? › Yes
+Would you like to customize the default import alias? › Yes
+Would you like to use TurboPack as the development server? > No
+Would you like to customize the default import alias? > Yes   (USE DEFAULT, JUST PRESS "ENTER")
+```
+
+### 2. Install Core Packages
+Run the following commands to add the necessary dependacies:
+```bash
+# For UI (Tailwind CSS, Shadcn, Radix, Sonner)
+npm install tailwindcss@latest postcss@latest autoprefixer@latest @shadcn/ui radix-ui sonner
+
+# Authentication and authorization (NextAuth.js)
+npm install next-auth @next-auth/prisma-adapter
+
+# Database and ORM (Prisma, SQLite or PostgreSQL)
+npm install prisma @prisma/client
+
+# OpenAI integration
+npm install openai
+
+# Payment solutions (Stripe)
+npm install stripe @stripe/stripe-js
+
+# REST API and WebSocket
+npm install axios ws
+
+# Other utilities
+npm install clsx class-variance-authority
+```
+
+
 
