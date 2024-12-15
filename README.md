@@ -98,6 +98,11 @@ npm install axios ws
 # Other utilities
 npm install clsx class-variance-authority
 
+# Three.js is a 3D library that Vanta.js depends on for rendering WebGL-based animations.
+npm install three
+
+# Vanta.js is a lightweight library for creating animated 3D backgrounds using WebGL.
+npm install vanta
 ```
 
 #### Any errors at this point? 
