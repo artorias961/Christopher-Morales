@@ -1,6 +1,6 @@
 # Final Portfolio
 
-Put vision here later
+PUT INFO LATER
 
 
 
@@ -9,14 +9,14 @@ Put vision here later
 
 
 
-### Node JS Installation V22.12.0
-Just navigate to the [NodeJS link](https://nodejs.org/en):
+### Node JS Installation V20.18.1 LTS
+Just navigate to the [NodeJS link]([https://nodejs.org/en](https://nodejs.org/en/download/package-manager) and select **V20.18.1 (LTS)**):
 
-![image](https://github.com/user-attachments/assets/046eaec8-9c38-4236-904d-64d50bb51e59)
+![image](https://github.com/user-attachments/assets/d7440436-8b7a-4bb6-bee3-b6ca65de9a33)
 
 
 
-### Installing npm v10.9.0 (need V22.12.0 node)
+### Installing npm v10.8.2 (need V20.18.1 LTS node)
 Open powershell and type in the following:
 ```powershell
 # installs fnm (Fast Node Manager)
@@ -26,13 +26,13 @@ winget install Schniz.fnm
 fnm env --use-on-cd | Out-String | Invoke-Expression
 
 # download and install Node.js
-fnm use --install-if-missing 22
+fnm use --install-if-missing 20
 
 # verifies the right Node.js version is in the environment
-node -v # should print `v22.12.0`
+node -v # should print `v20.18.1`
 
 # verifies the right npm version is in the environment
-npm -v # should print `10.9.0`
+npm -v # should print `10.8.2`
 ```
 
 
