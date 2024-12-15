@@ -10,7 +10,7 @@ PUT INFO LATER
 
 
 ### Node JS Installation V20.18.1 LTS
-Just navigate to the [NodeJS link]([https://nodejs.org/en](https://nodejs.org/en/download/package-manager) and select **V20.18.1 (LTS)**):
+Just navigate to the [NodeJS link](https://nodejs.org/en/download/package-manager) and select **V20.18.1 (LTS)**):
 
 ![image](https://github.com/user-attachments/assets/d7440436-8b7a-4bb6-bee3-b6ca65de9a33)
 
