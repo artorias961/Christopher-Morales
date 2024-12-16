@@ -52,8 +52,172 @@ A [GitHub](https://github.com) is a neccessity cause you will need to upload the
 
 If you are using are using [linux for docker](https://docs.docker.com/desktop/setup/install/linux/). Just go to the terminal and follow the platform guideline.
 
+#### Useful commands for Docker
 
-#### The strucutre I am planning for docker
+```bash
+docker-compose up -d
+```
+- Starts all the services defined in the docker-compose.yml file
+- The -d flag runs the services in detached mode, meaning the containers run in the background and you regain control of your terminal.
+- Purpose: Re-creates and runs the environment defined in the docker-compose.yml
+
+
+```bash
+docker-compose down -v
+```
+- Stops and removes all the containers, networks, and volumes defined in the docker-compose.yml file.
+- The -v flag ensures that volumes associated with the services are also removed. Without this flag, named volumes persist even after the containers are removed.
+- Purpose: Completely resets the environment, including removing stored data in volumes.
+
+
+```bash
+docker logs postgres_container
+```
+- Fetches and displays the logs of the container named postgres_container.
+- Useful for debugging or monitoring what is happening inside the postgres_container.
+- Purpose: Check the output and status messages of the PostgreSQL service.
+
+
+```bash
+docker-compose ps
+```
+- Lists all running containers in the docker-compose project.
+- Displays the container names, states (up/down), and port mappings.
+- Purpose: To check the status of services managed by Docker Compose.
+
+```bash
+docker-compose logs -f [service_name]
+```
+- Streams logs for a specific service or all services if [service_name] is omitted.
+- The -f flag keeps the logs open and updates them in real-time.
+- Purpose: Real-time monitoring of service logs.
+
+```bash
+docker-compose exec [service_name] [command]
+```
+- Executes a command in a running container associated with a specific service.
+- Example: docker-compose exec postgres_container psql -U postgres opens the PostgreSQL client inside the container.
+- Purpose: Run shell commands or interact with the service.
+
+```bash
+docker-compose build
+```
+- Builds or rebuilds the Docker images defined in the docker-compose.yml file.
+- Useful if Dockerfile or service dependencies have been updated.
+- Purpose: Prepares fresh container images.
+
+```bash
+docker-compose restart [service_name]
+```
+- Restarts specific services or all services in the docker-compose project.
+- Useful for applying configuration changes without a full teardown.
+- Purpose: Refreshes services while preserving their volumes and networks.
+
+```bash
+docker-compose stop
+```
+- Stops running containers but retains volumes and network configurations.
+- Unlike down, this does not remove containers.
+- Purpose: Pause the environment without complete removal.
+
+```bash
+docker ps
+```
+- Lists all running containers, their IDs, names, images, and status.
+- Purpose: View active containers and their configurations.
+
+```bash
+docker ps -a
+```
+- Lists all containers, including those that are stopped or exited.
+- Purpose: Inspect the history of previously run containers.
+
+```bash
+docker images
+```
+- Lists all Docker images available locally.
+- Displays image names, tags, sizes, and creation dates.
+- Purpose: Manage available images.
+
+```bash
+docker rmi [image_id]
+```
+- Removes a Docker image by its ID or name.
+- Useful for clearing unused or old images.
+- Purpose: Free up disk space by removing unwanted images.
+
+```bash
+docker rm [container_id]
+```
+- Removes stopped containers by their ID or name.
+- Active containers cannot be removed until they are stopped.
+- Purpose: Clean up unused containers.
+
+```bash
+docker volume ls
+```
+- Lists all Docker volumes available on the system.
+- Displays the volume name and scope (local/shared).
+- Purpose: Manage persistent storage.
+
+```bash
+docker network ls
+```
+- Lists all Docker networks.
+- Displays network names, drivers (bridge, overlay, etc.), and scope.
+- Purpose: Identify and manage networks for container communication.
+
+```bash
+docker inspect [container_id|image_id|volume_name|network_name]
+```
+- Provides detailed JSON output about a container, image, volume, or network.
+- Includes configuration, environment variables, and runtime details.
+- Purpose: Debug or understand the configuration of Docker resources.
+
+```bash
+docker exec -it [container_name] /bin/bash
+```
+- Opens an interactive bash shell inside a running container.
+- The -it flag ensures the terminal remains interactive.
+- Purpose: Debug or manually interact with the container.
+
+```bash
+docker stats
+```
+- Displays real-time resource usage stats for running containers (CPU, memory, network, etc.).
+- Purpose: Monitor container performance.
+
+```bash
+docker system prune
+```
+- Removes unused containers, images, networks, and volumes.
+- Prompts confirmation before deletion.
+- Purpose: Clean up disk space by removing unnecessary resources.
+
+```bash
+docker volume prune
+```
+- Removes all unused Docker volumes.
+- Prompts confirmation before deletion.
+- Purpose: Clean up orphaned volumes.
+
+```bash
+docker image prune
+```
+- Removes all dangling (unused) images.
+- Prompts confirmation before deletion.
+- Purpose: Clear disk space by removing images no longer needed.
+
+```bash
+docker-compose down --remove-orphans
+```
+- Stops and removes containers, networks, and orphaned containers (those not defined in the docker-compose.yml file).
+- Purpose: Ensure a clean environment by removing outdated or leftover containers.
+
+
+
+
+
 
 
 
@@ -77,6 +241,8 @@ If you are planning to download a database locally on your computer then. The pr
 From a quick google search, [Supabase](https://supabase.com) or [Firebase](https://firebase.google.com) will be used. From the forums I been reading **Firebase** is a very good one (a lot of features) but limited with bandwidth!!!
 
 #### 3a. Docker Container
+***IF YOU ARE GOING TO USE DOCKER, YOU HAVE TO MAKE SURE NOT TO INSTALL THE DATABASE. FOR EXAMPLE, IF YOU DOWNLOAD POSTGRESQL, DOCKER WILL NOT LIKE IT. IT WILL CAUSE AUTHETICATION ISSUES AND IS NOT WORTH DEALING. PICK ONE OR THE OTHER. I RECOMMEND DOCKER OR AN ONLINE SERVICE. AGAIN, IF YOU HAVE INSTALLED A DATABASE, JUST INSTALL IT OR AVOID DOCKER LIKE THE PLAGUE***
+
 If you are planning to do a docker container then go to the website/database you are going to use find docker container. Since I will be using [PostgreSQL docker container](https://hub.docker.com/_/postgres) just follow along. If not just follow my instructions!!! I recommend creating a new folder that is outside of the website and call it **containers**. Will make you life easier!!!
 
 ##### 3a. Docker Container Step 1: Create the docker-compose File
@@ -97,6 +263,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: always # Automatically restart the container if it stops
+  env_file:
+      - ../../my_app/.env # Path to the .env file
 
 volumes:
   postgres_data:
@@ -119,6 +287,8 @@ volumes:
 
 
 ##### 3b. Docker Container Step 2: Run the PostgreSQL Container
+
+
 Save the file. Then run the following in the terminal:
 ```bash
 docker-compose up -d
@@ -360,8 +530,7 @@ model Post {
   createdAt DateTime @default(now())
 }
 ```
-Go to the [4a. Connect to PostgreSQL or any database](https://github.com/artorias961/Christopher-Morales/edit/main/README.md#4a-connect-to-postgresql-or-any-database) and replace the URL link with the correct information for the URL *(if you change the username, password, and database name)*.
-
+***DO NOT DO ANYTHIGN YET, JUST COPY THE CODE AND PASTE***
 Here are some notes from **PRISMA**
 1. Set the DATABASE_URL in the .env file to point to your existing database. If your database has no tables yet, read https://pris.ly/d/getting-started
 2. Set the provider of the datasource block in schema.prisma to match your database: postgresql, mysql, sqlite, sqlserver, mongodb or cockroachdb.
@@ -370,17 +539,41 @@ Here are some notes from **PRISMA**
 5. Tip: Explore how you can extend the ORM with scalable connection pooling, global caching, and real-time database events. Read: https://pris.ly/cli/beyond-orm
 
 
-#### c. Run migration
+#### c. Modify .env file
+Go to the [4a. Connect to PostgreSQL or any database](https://github.com/artorias961/Christopher-Morales/edit/main/README.md#4a-connect-to-postgresql-or-any-database) and COPY the URL *(if you change the username, password, and database name)*. Once you copy the URL, find *my-app/.env* (in my case *artorias961/.env*). Update the URL, as the following shows:
+
+![image](https://github.com/user-attachments/assets/5211ed75-734a-467a-baf5-645113978a2c)
+*NOTE: The image is the default example, I will change to my unique URL i created from docker. Remember if you are using the online web service, there is a unique URL and same with the local app database you installed. I choose docker cause its faster and a booming tech atm!!!* 
+
+If you need an example then here:)
+![image](https://github.com/user-attachments/assets/b3e4f224-5309-4814-816c-458ef8970689)
+![image](https://github.com/user-attachments/assets/7ee6e5bf-ec0b-4426-9f75-5855cb4bebdd)
+![image](https://github.com/user-attachments/assets/8fe78932-2568-4cc1-a161-4240b8fa0dc3)
+![image](https://github.com/user-attachments/assets/a390b188-6d24-4c73-a8bb-5ca4878e97a2)
+
+
+The only thing i did, was copying *docker-compose* file information to *.env* file.
+
+
+#### d. Verify docker container made changes
+Run the following line of code and you should see the three variables (username, password, database name):
+```bash
+docker exec -it postgres_container env
+```
+*NOTE: Just make sure to Change Directory to the docker file. Once you confirm go back to the main app*
+
+#### e. Run migration
 If you have change the **DATABASE_URL** from the PRISMA file, then you should do the following:
 ```bash
 npx prisma migrate dev --name init
 ```
+Once you do the command line, you should get the following:
+![image](https://github.com/user-attachments/assets/753089d7-cc55-4284-8b9b-cf95676aeb9b)
+
+*NOTE: If you have an error with Docker specifically, read the choices for database. The answer is in there!!!*
 
 
-
-
-
-
+#### d. Integrate Prisma into the project (pages/api/auth/[...nextauth].ts)
 
 
 
