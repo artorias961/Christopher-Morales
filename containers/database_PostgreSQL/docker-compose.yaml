@@ -5,14 +5,16 @@ services:
     image: postgres:latest
     container_name: postgres_container
     ports:
-      - "5432:5432" # Expose PostgreSQL on port 5432
+      - "5432:5432"
     environment:
-      POSTGRES_USER: artychan
-      POSTGRES_PASSWORD: Peeeweee12
-      POSTGRES_DB: artychan_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    restart: always # Automatically restart the container if it stops
+    restart: always
+    env_file:
+      - ../../artorias961/.env # Path to the .env file
 
 volumes:
   postgres_data:

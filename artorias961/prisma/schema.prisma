@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("postgresql://artychan:Peeeweee12@localhost:5432/artychan_db")
+  url      = env("DATABASE_URL")
 }
 
 // ANYTHING UNDER IS NEW!!!!!!<--------------------------
