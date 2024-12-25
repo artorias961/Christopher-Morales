@@ -482,8 +482,7 @@ Find the file  *styles/globals.css*  or *src\app\global.css* and when opening th
 
 
 
-### 4. Configure Prisma
-
+### 4. Configure Prisma 
 #### a. Initialize Prisma
 Once you run the following command, a bunch more files will be generated. Run the following line:
 ```bash
@@ -573,16 +572,94 @@ Once you do the command line, you should get the following:
 *NOTE: If you have an error with Docker specifically, read the choices for database. The answer is in there!!!*
 
 
-#### d. Integrate Prisma into the project (pages/api/auth/[...nextauth].ts)
+#### d. Integrate Prisma into the project (src/app/api/auth/[...nextauth]/route.ts)
+Create a bunch of folders within the *src* fold. In the *route.ts* add in the following:
+```ts
+import NextAuth from "next-auth";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import GoogleProvider from "next-auth/providers/google";
+import prisma from "@/lib/prisma"; // Adjust path if necessary
+
+const handler = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  providers: [
+// ADD YOUR AUTHENTICATION PROVIDERS HERE <----------
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
+  ],
+  session: {
+    strategy: "jwt", // Use JWT for sessions
+  },
+  callbacks: {
+    async session({ session, user }) {
+      session.user = user;
+      return session;
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+});
+
+export { handler as GET, handler as POST };
+```
+Now we have Prisma setup, we are going to integrate prisma with Next.JS Authentication called NextAuth. We can use other plugins but for now we will use the built in and we can always add more plugins but we want reliability first.
+
+If you have noticed, we are going to use *google auth* since mostly everyone has a google account and we can add more providers if we wanted too!!! If you where confused about the file location then here:
+![image](https://github.com/user-attachments/assets/8df8d889-6bcb-467b-a897-c375a2faf4c3)
 
 
 
+### 5. Add Authentication (NextAuth)
+
+#### a. Create a .env.locl
+Where you **.env** file is located, we are going to create a new file called ***.env.local*** where we are going to put the following:
+```env
+NEXTAUTH_URL=http://localhost:3000
+DATABASE_URL=file:./dev.db
+```
+
+#### b. Add Sign-In and Sign-Out in your application (/pages/auth/signin.tsx)
+We are going to create another file called **signin.tsx** where we can sign in and out!!! In the file put in the following:
+```ts
+// pages/auth/signin.tsx
+import { signIn } from "next-auth/react";
+
+export default function SignIn() {
+  return (
+    <div>
+      <button onClick={() => signIn("github")}>Sign in with GitHub</button>
+    </div>
+  );
+}
+```
+You can make it as fancy as you want it later on but for now, reliability.
 
 
+#### c. Protect Admin Dashboard (src/app/admin/page.tsx)
+I want to create a hidden wall where admin user can have more control like websockts, api, etc. While the general users just see my simple portfolio!!! Anyways, what the file should contain (again you can modify this later):
+```ts
+import { useSession } from "next-auth/react";
 
+export default function AdminDashboard() {
+  const { data: session } = useSession();
 
+  if (!session || session.user.role !== "ADMIN") {
+    return <div>Access Denied</div>;
+  }
 
+  return <div>Welcome to the Admin Dashboard</div>;
+}
+```
 
+### 6. Add API Rest
+For this section, by default, I want the blogs, projects, or lessons data to be visible to everyone, but I want the API that allows adding/updating data (like an "admin-only control panel") to be restricted to admin users only.
+
+Plan:
+1. GET Route:
+    - Accessible by everyone (fetches public data like blogs, projects, etc.).
+2. POST/PUT/DELETE Routes:
+    - Restricted to admin users for adding, updating, or deleting data.
 
 
 
